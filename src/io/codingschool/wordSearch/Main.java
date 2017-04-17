@@ -3,6 +3,7 @@ package io.codingschool.wordSearch;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -59,12 +60,22 @@ public class Main {
         Set<GraphNode> nodes = graph.getNodes();
 
         for (GraphNode node : nodes) {
-            List<GraphNode> visited = new LinkedList<GraphNode>();
-            visited.add(node);
-
             // Start a new thread for each branch
-            for (Edge edge : graph.getNeighbors(node))
-                (new searchBranch(graph, edge.destination, visited, dict)).start();
+            for (Edge edge : graph.getNeighbors(node)) {
+                List<GraphNode> visited = new LinkedList<GraphNode>();
+
+                GraphNode nextNode = edge.destination;
+                visited.add(node);
+                visited.add(nextNode);
+
+                String wordStem = node.toString() + nextNode.toString();
+
+                List<String> searchFor = dict.stream()
+                        .filter(str -> str.startsWith(wordStem))
+                        .collect(Collectors.toList());
+
+                (new searchBranch(graph, nextNode, visited, searchFor)).start();
+            }
         }
     }
 
