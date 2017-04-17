@@ -45,6 +45,9 @@ public class searchBranch extends Thread {
 
             if (filteredWords.get(0).equals(word))
                 System.out.println(word);
+
+            if (filteredWords.size() == 1)
+                return;
         }
 
         for (Edge edge : graph.getNeighbors(node)) {
