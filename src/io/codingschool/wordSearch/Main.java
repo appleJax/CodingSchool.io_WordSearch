@@ -3,10 +3,11 @@ package io.codingschool.wordSearch;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Main {
 
-    private static Dictionary dict = new Dictionary();
+    private static List<String> dict = new Dictionary().wordList;
 
     public static void main(String[] args) {
 
@@ -63,32 +64,44 @@ public class Main {
             visited.add(node);
 
             for (Edge edge : graph.getNeighbors(node))
-                searchNext(graph, edge.destination, visited);
+                searchNext(graph, edge.destination, visited, dict);
         }
     }
 
-    private static void searchNext(Graph graph, GraphNode node, List<GraphNode> visited) {
+    private static void searchNext(Graph graph, GraphNode node, List<GraphNode> visited, List<String> wordList) {
+        List<String> filteredWords = new LinkedList<String>(wordList);
         List<GraphNode> history = new LinkedList<GraphNode>(visited);
         history.add(node);
 
-        if (history.size() > 5)
-            return;
-
         if (history.size() > 2) {
-            String result = "";
+            String word = "";
 
             for (GraphNode letter : history)
-                result += letter.toString();
+                word += letter.toString();
 
-            if (dict.isWord(result))
-                System.out.println(result);
+            // required for lambda (cannot use a non-final local variable)
+            final String fullWord = word;
+
+            // filter the dictionary to only include words that start with
+            // the current word
+            filteredWords = wordList.stream()
+                    .filter(str -> str.startsWith(fullWord))
+                    .collect(Collectors.toList());
+
+            // if there are no words in the dictionary that start with the
+            // current word, stop looking
+            if (filteredWords.size() < 1)
+                return;
+
+            if (filteredWords.get(0).equals(word))
+                System.out.println(word);
         }
 
         for (Edge edge : graph.getNeighbors(node)) {
             GraphNode nextNode = edge.destination;
 
             if (!history.contains(nextNode))
-                searchNext(graph, nextNode, history);
+                searchNext(graph, nextNode, history, filteredWords);
         }
 
     }

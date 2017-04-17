@@ -12,10 +12,10 @@ import java.util.LinkedList;
 
 public class Dictionary {
 
-    private List<String> dictionary;
+    public List<String> wordList;
 
     public Dictionary() {
-        dictionary = new LinkedList<String>();
+        wordList = new LinkedList<String>();
 
         File file = new File("./dictionary.txt");
         FileInputStream fis = null;
@@ -37,7 +37,7 @@ public class Dictionary {
                 String word = scan.readLine().toUpperCase();
 
                 if (word.length() > 2 && !word.equals("THE"))
-                    dictionary.add(word);
+                    wordList.add(word);
             }
 
             // dispose all the resources after using them.
@@ -53,6 +53,6 @@ public class Dictionary {
     }
 
     public boolean isWord(String word) {
-        return dictionary.contains(word);
+        return wordList.contains(word);
     }
 }
