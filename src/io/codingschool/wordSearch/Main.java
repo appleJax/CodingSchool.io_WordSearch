@@ -80,12 +80,14 @@ public class Main {
     }
 
     private static String[][] searchScaffold = new String[][] {
-            { "A", "C", "D", "W", "B", "D", "S" },
-            { "G", "D", "N", "O", "D", "N", "S" },
-            { "T", "D", "H", "R", "H", "N", "S" },
-            { "T", "H", "E", "D", "T", "X", "B" },
-            { "Z", "C", "E", "O", "A", "R", "J" },
-            { "U", "C", "N", "R", "Y", "D", "S" }
+            { "A", "C", "D", "W", "B", "D", "S", "E" },
+            { "G", "D", "N", "O", "D", "N", "S", "L" },
+            { "T", "D", "H", "R", "H", "N", "S", "N" },
+            { "T", "H", "E", "D", "T", "X", "B", "E" },
+            { "Z", "C", "E", "O", "A", "R", "J", "I" },
+            { "U", "Z", "N", "R", "Y", "D", "S", "G" },
+            { "D", "O", "O", "H", "R", "O", "B", "H" },
+            { "J", "U", "N", "K", "A", "P", "M", "I" }
     };
 
     private static GraphNode[][] makeNodes(String[][] nodes) {

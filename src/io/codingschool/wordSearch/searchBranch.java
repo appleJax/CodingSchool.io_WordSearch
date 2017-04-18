@@ -51,9 +51,6 @@ public class searchBranch extends Thread {
                 if (filteredWords.get(0).equals(word))
                     System.out.println(word);
 
-                if (filteredWords.size() == 1)
-                    continue;
-
                 (new searchBranch(graph, nextNode, history, filteredWords)).start();
             }
         }
